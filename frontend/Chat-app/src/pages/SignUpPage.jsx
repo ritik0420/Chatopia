@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { useAuthStore } from '../store/useAuthStore';
-import { MessageSquare, User, Mail, Lock, EyeOff, Eye, Loader2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import AuthImagePattern from '../components/AuthImagePattern';
-import Navbar from '../components/Navbar.jsx';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
+import { MessageSquare, User, Mail, Lock, EyeOff, Eye, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import AuthImagePattern from "../components/AuthImagePattern";
+import Navbar from "../components/Navbar.jsx";
+import toast from "react-hot-toast";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +14,7 @@ const SignUpPage = () => {
     password: "",
   });
 
-  const {signup, isSigningUp } = useAuthStore();
+  const { signup, isSigningUp } = useAuthStore();
 
   const validateForm = () => {
     if (!formData.fullName.trim()) return toast.error("Full name is required");
@@ -24,15 +24,20 @@ const SignUpPage = () => {
     if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
 
     return true;
-   }
+  };
 
   const handleSubmit = (e) => {
-    
     e.preventDefault();
-  }
+
+    // Validate form and call signup function
+    if (validateForm()) {
+      signup(formData);
+    }
+  };
+
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
-      {/* left side */}
+      {/* Left side */}
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="w-full max-w-md space-y-8">
           {/* LOGO */}
@@ -64,7 +69,6 @@ const SignUpPage = () => {
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 />
-
               </div>
             </div>
             <div className="form-control">
@@ -133,14 +137,13 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-       {/* right side */}
-
-       <AuthImagePattern
+      {/* Right side */}
+      <AuthImagePattern
         title="Join our community"
         subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
       />
     </div>
-  )
+  );
 };
 
 export default SignUpPage;
